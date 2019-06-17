@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/add_celebrity"
+            android:icon="@drawable/ic_add_black_24dp"
+            android:title="Add Celebrity">
+        </item>
+        <item android:id="@+id/remove_celebrity"
+            android:icon="@drawable/ic_remove_black_24dp"
+            android:title="Remove Celebrity">
+        </item>
+        <item android:id="@+id/view_all_celebrities"
+            android:icon="@drawable/ic_view_list_black_24dp"
+            android:title="View All Celebrities">
+        </item>
+        <item android:id="@+id/make_favorite"
+            android:icon="@drawable/ic_star_black_24dp"
+            android:title="Make a Favorite">
+        </item>
+        <item android:id="@+id/all_favorites"
+            android:icon="@drawable/ic_stars_black_24dp"
+            android:title="All Favorites">
+        </item>
+    </group>
+
+
+</menu>
