@@ -12,9 +12,9 @@
             android:icon="@drawable/ic_remove_black_24dp"
             android:title="Remove Celebrity">
         </item>
-        <item android:id="@+id/view_all_celebrities"
+        <item android:id="@+id/update_celebrity"
             android:icon="@drawable/ic_view_list_black_24dp"
-            android:title="View All Celebrities">
+            android:title="Update Celebrity">
         </item>
         <item android:id="@+id/make_favorite"
             android:icon="@drawable/ic_star_black_24dp"

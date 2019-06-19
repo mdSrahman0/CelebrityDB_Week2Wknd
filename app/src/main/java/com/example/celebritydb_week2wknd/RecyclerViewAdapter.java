@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
-    ArrayList<Celebrity> celebList = new ArrayList<>();
+    ArrayList<Celebrity> celebList;
 
     public RecyclerViewAdapter(ArrayList<Celebrity> celebList){
         this.celebList = celebList;
@@ -49,7 +49,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public int getItemCount() {
-        return celebList.size();
+        if (celebList != null){
+            return celebList.size();
+        }
+        return 0;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

@@ -14,13 +14,13 @@ import static com.example.celebritydb_week2wknd.DatabaseContract.TABLE_NAME;
 import static com.example.celebritydb_week2wknd.DatabaseContract.FIELD_NAME;
 import static com.example.celebritydb_week2wknd.DatabaseContract.FIELD_AGE;
 import static com.example.celebritydb_week2wknd.DatabaseContract.FIELD_PROFESSION;
+import static com.example.celebritydb_week2wknd.DatabaseContract.whereClauseForUpdate;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     public DatabaseHelper(Context context) {
         // factory is set to null because we're not using a custom cursor
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
-
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -48,6 +48,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         writableDatabase.close();
     }
 
+    // update an existing celebrity
+    public void updateCelebrity(Celebrity celeb) {
+        SQLiteDatabase writableDatabase = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(FIELD_NAME, celeb.getName());
+        contentValues.put(FIELD_AGE, celeb.getAge());
+        contentValues.put(FIELD_PROFESSION, celeb.getProfession());
+
+        writableDatabase.update(TABLE_NAME, contentValues, whereClauseForUpdate(celeb.getName()), null);
+        writableDatabase.close();
+    }
+
+
     // return a list of all the celebrities in the db.
     public ArrayList<Celebrity> queryForAllCelebrities() {
         ArrayList<Celebrity> returnCelebsList = null; // hold all the celebrities we receive from db
@@ -72,8 +85,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             } while(cursor.moveToFirst());
         }
         readableDatabase.close();
+        cursor.close();
         return returnCelebsList;  // return the now populated arraylist
     }
 
-
+    public void deleteCelebrity(String name){
+        SQLiteDatabase writableDatabase = this.getWritableDatabase();
+        writableDatabase.delete(TABLE_NAME, whereClauseForUpdate(name), null);
+        writableDatabase.close();
+    }
 }

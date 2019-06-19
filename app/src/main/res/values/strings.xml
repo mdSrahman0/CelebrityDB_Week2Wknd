@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">CelebrityDB_Week2Wknd</string>
+    <string name="opening">Welcome to the Celebrity Database. Current Celebrities:</string>
     <string name="save_to_db_btn">Save to Database</string>
     <string name="nav_header">List of features:</string>
 </resources>

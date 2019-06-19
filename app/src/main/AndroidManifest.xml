@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.celebritydb_week2wknd">
+    <permission android:name="content.provider.permission"/>
 
     <application
         android:allowBackup="true"
@@ -18,6 +19,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <provider
+            android:authorities="com.example.celebritydb_week2wknd"
+            android:name=".CelebrityProvider"
+            android:permission="content.provider.permission"
+            />
+
     </application>
 
 </manifest>

@@ -10,6 +10,8 @@
 
     <style name = "HeaderText">
         <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:background">@color/colorOrange</item>
     </style>
 
     <style name="UserInputText">

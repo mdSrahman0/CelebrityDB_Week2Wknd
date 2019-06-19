@@ -39,6 +39,7 @@ import android.widget.Toast;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -49,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private RecyclerView rvCelebs;
 
     public RecyclerViewAdapter recyclerViewAdapter;
-    private LinearLayoutManager layoutManager;
+    public LinearLayoutManager layoutManager;
 
     public static final String TAG = "TAG_MAIN_ACTIVITY";
 
@@ -74,31 +75,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        dbHelper = new DatabaseHelper(this);
+
         rvCelebs = findViewById(R.id.rvCelebsRecyclerView);
+
+        Log.d(TAG, "onCreate: ");
 
         populateCelebsList();
         initializeRecyclerView();
     }
 
     private void initializeRecyclerView() {
-        recyclerViewAdapter = new RecyclerViewAdapter(defaultCelebs);
+        recyclerViewAdapter = new RecyclerViewAdapter(dbHelper.queryForAllCelebrities());
         layoutManager = new LinearLayoutManager(this);
         rvCelebs.setLayoutManager(layoutManager);
         rvCelebs.setAdapter(recyclerViewAdapter);
-    }
-
-    // create a list of celebs that will initially be added to our db
-    private void populateCelebsList(){
-        defaultCelebs.add(new Celebrity("Leonardo Dicaprio", "40", "Actor"));
-        defaultCelebs.add(new Celebrity("Quentin Tarantino", "55", "Director"));
-        defaultCelebs.add(new Celebrity("Kanye West", "40", "Musician"));
-
-        // add these celebs to our database
-        dbHelper = new DatabaseHelper(this);
-        for (int i = 0; i < defaultCelebs.size(); i++) {
-            dbHelper.insertCelebrity(defaultCelebs.get(i));
-        }
-        dbHelper.close();
     }
 
     // Define what happens when a menu item is clicked
@@ -112,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             // The following cases have not been implemented yet.
             case R.id.remove_celebrity:
                 break;
-            case R.id.view_all_celebrities:
+            case R.id.update_celebrity:
                 break;
             case R.id.make_favorite:
                 break;
@@ -127,13 +118,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.d(TAG, "onActivityResult: " + requestCode);
+
         // check if we have the correct result code and data exists
         if(resultCode == 0 && data!= null) {
             Bundle passedBundle = data.getExtras();
             Log.d(TAG, "onActivityResult: Inside first if" );
+
             if(passedBundle != null){
                 Celebrity celeb = passedBundle.getParcelable("celeb");
                 recyclerViewAdapter.addCelebs(celeb);
+                /*
+                for(Celebrity celebrity : dbHelper.queryForAllCelebrities()) {
+                    Log.d(TAG, String.format(Locale.US, "%s %s %s ", celebrity.getName(), celebrity.getAge(),
+                            celebrity.getProfession()));
+                } */
             }
         }
     }
@@ -153,5 +151,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void onClick(View view) {
+    }
+
+    // create a list of celebs that will initially be added to our db
+    private void populateCelebsList(){
+        defaultCelebs.add(new Celebrity("Leonardo Dicaprio", "40", "Actor"));
+        defaultCelebs.add(new Celebrity("Quentin Tarantino", "55", "Director"));
+
+        for (int i = 0; i < defaultCelebs.size(); i++) {
+            dbHelper.insertCelebrity(defaultCelebs.get(i));
+        }
+        dbHelper.close();
+
+        /*
+        for(Celebrity celebrity : dbHelper.queryForAllCelebrities()) {
+            Log.d(TAG, String.format(Locale.US, "%s %s %s ", celebrity.getName(), celebrity.getAge(),
+                    celebrity.getProfession()));
+        } // end for */
     }
 }
