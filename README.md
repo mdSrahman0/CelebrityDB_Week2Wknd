@@ -1,6 +1,6 @@
 # CelebrityDB_Week2Wknd
 
-
+NOTE - Database still has issues. Garbage collection Freed problem. Occasionally, main activity won't load. 
 /**
 
 Create an application that has a celebrity database
